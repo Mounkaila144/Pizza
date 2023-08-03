@@ -138,11 +138,11 @@
                                             </div>
                                         </td>
 
-                                        <td data-label="Price" class="product-price"><h5 class="h5-md">{{ item.menu.prix }}</h5></td>
+                                        <td data-label="Price" class="product-price"><h5 class="h5-md">{{ item.menu.prix }} €</h5></td>
                                         <td data-label="Quantity" class="product-qty">
                                             <input class="qty  form-control-sm" type="number" min="1" max="20" value="{{ item.quantity }}" data-menu-id="{{ item.menu.id }}">
                                         </td>
-                                        <td data-label="Total" class="product-price-total"><h5 class="h5-md">{{ (item.menu.prix * item.quantity)|number_format(2, '.', '') }}</h5></td>
+                                        <td data-label="Total" class="product-price-total"><h5 class="h5-md">{{ (item.menu.prix * item.quantity)|number_format(2, '.', '') }} €</h5></td>
                                         <td data-label="Delete" class="td-trash"><i class="far fa-trash-alt text-danger" data-menu-id="{{ item.menu.id }}"></i></td>
                                     </tr>
                                 {% else %}
@@ -172,7 +172,7 @@
                             <div id="send">
                             <h5 class="h5-lg">Cart Total</h5>
                             <!-- Add a span with the id "cart-total" to display the cart total -->
-                            <h5 id="cart-total" class="h6-lg">{{ total|number_format(2, '.', '') }}</h5>
+                            <h5 id="cart-total" class="h6-lg">{{ total|number_format(2, '.', '') }} €</h5>
                             <a href="#" class="btn btn-md btn-salmon tra-salmon-hover" id="commande">Commander</a>
                             </div>
                         </div>
