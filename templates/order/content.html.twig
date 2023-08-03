@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title mb-0 text-center">Contenue</h3>
+    </div>
+    <div class="card-body">
+    <div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>Menu</th>
+            <th>Quantité</th>
+            <th>Prix unitaire</th>
+            <th>Total par article</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in cartContent %}
+            <tr>
+                <td>{{ item.menu.getTitle }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.menu.getPrix() }}</td>
+                <td>{{ item.totalItem }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <p>Grand Total: {{ grandTotal }}</p>
+
+    </div>
+    </div>
+</div>
+
+{% endblock %}
+

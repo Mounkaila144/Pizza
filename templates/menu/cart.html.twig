@@ -1,0 +1,497 @@
+{% extends 'templaite.html.twig' %}
+
+{% block title %}Restauant{% endblock %}
+
+{% block body %}
+    <!-- HEADER-3
+    ============================================= -->
+    <header id="header-3" class="header navik-header header-transparent header-shadow">
+        <div class="container">
+
+
+            <!-- NAVIGATION MENU -->
+            <div class="navik-header-container">
+
+
+                <!-- CALL BUTTON -->
+                <div class="callusbtn"><a ><i class="fas fa-phone"></i></a></div>
+
+
+                <!-- LOGO IMAGE -->
+                <div class="logo" data-mobile-logo="{{asset('assets/images/logo-01.png')}}" data-sticky-logo="{{asset('assets/images/logo-01.png')}}">
+                    <a href="#"><img src="{{asset('assets/images/logo-01.png')}}" alt="header-logo"/></a>
+                </div>
+
+
+                <!-- BURGER MENU -->
+                <div class="burger-menu">
+                    <div class="line-menu line-half first-line"></div>
+                    <div class="line-menu"></div>
+                    <div class="line-menu line-half last-line"></div>
+                </div>
+
+
+                <!-- MAIN MENU -->
+                <nav class="navik-menu menu-caret navik-yellow">
+                    <ul class="top-list">
+
+                        <!-- DROPDOWN MENU -->
+                        <li><a href="{{ path('app_front') }}" class="home">Home</a>
+
+
+
+                            {% if app.user %}
+                        <li><a href="{{ path('app_logout') }}" class="contact text-error">Déconnexion</a></li>
+                        {% else %}
+                            <li><a href="{{ path('app_login') }}" class="contact">Connexion</a></li>
+                            <li><a href="{{ path('app_register') }}" class="contact">Inscription</a></li>
+                        {% endif %}
+
+
+                        <li class="basket-ico ico-30">
+                            <a href="{{ path('app_front_cart') }}">
+                                <span class="ico-holder"><span class="flaticon-shopping-bag"></span> <em class="roundpoint" id="cartItemCount">{{ cart|length }}</em></span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+
+
+            </div>
+
+
+        </div>
+    </header>	<!-- END HEADER-3 -->
+
+
+
+
+
+    <!-- PAGE CONTENT
+    ============================================= -->
+    <div id="page" class="page">
+
+        <div id="cart-page" class="page-hero-section division">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 offset-lg-1">
+                        <div class="hero-txt text-center white-color">
+
+                            <!-- Fil d'Ariane -->
+                            <div id="breadcrumb">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="breadcrumb-nav">
+                                            <nav aria-label="breadcrumb">
+                                                <ol class="breadcrumb">
+                                                    <li class="breadcrumb-item"><a href="{{ path('app_front') }}">Accueil</a></li>
+                                                    <li class="breadcrumb-item active" aria-current="page">Panier d'achat</li>
+                                                </ol>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Titre -->
+                            <h2 class="h2-xl">Panier d'achat</h2>
+
+                        </div>
+                    </div>
+                </div>	  <!-- Fin de la ligne -->
+            </div>	   <!-- Fin du conteneur -->
+        </div>	<!-- FIN DE LA SECTION HÉROS DE LA PAGE -->
+
+
+
+
+        <!-- CART PAGE
+        ============================================= -->
+        <section id="cart-1" class="wide-100 cart-page division">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="cart-table mb-70">
+                            <table id="myTable">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total item</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for item in cart %}
+                                    <!-- CART ITEM #{{ loop.index }} -->
+                                    <tr class="item">
+                                        <td data-label="Product" class="product-name">
+                                            <!-- Preview -->
+                                            <div class="cart-product-img"><img src="{{ vich_uploader_asset(item.menu, 'imageFile') }}" alt="cart-preview"></div>
+                                            <!-- Description -->
+                                            <div class="cart-product-desc">
+                                                <h5 class="h5-sm">{{ item.menu.title }}</h5>
+                                            </div>
+                                        </td>
+
+                                        <td data-label="Price" class="product-price"><h5 class="h5-md">{{ item.menu.prix }}</h5></td>
+                                        <td data-label="Quantity" class="product-qty">
+                                            <input class="qty  form-control-sm" type="number" min="1" max="20" value="{{ item.quantity }}" data-menu-id="{{ item.menu.id }}">
+                                        </td>
+                                        <td data-label="Total" class="product-price-total"><h5 class="h5-md">{{ (item.menu.prix * item.quantity)|number_format(2, '.', '') }}</h5></td>
+                                        <td data-label="Delete" class="td-trash"><i class="far fa-trash-alt text-danger" data-menu-id="{{ item.menu.id }}"></i></td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="6">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- CART CHECKOUT -->
+                {% if cart|length > 0 %}
+                <div class="row justify-content-center" >
+
+                    <!-- DISCOUNT COUPON -->
+            <!-- Ajouter ce script JS à votre template ou le charger dans un fichier séparé -->
+
+
+
+                        <div class="col-8">
+                        <div class="cart-checkout bg-lightgrey">
+                            <div class="alert alert-success" role="alert" style="display: none" id="confirmationDialog" title="Order Confirmation">
+                                Votre commandes a bien été envoyer
+                            </div>
+                            <div id="send">
+                            <h5 class="h5-lg">Cart Total</h5>
+                            <!-- Add a span with the id "cart-total" to display the cart total -->
+                            <h5 id="cart-total" class="h6-lg">{{ total|number_format(2, '.', '') }}</h5>
+                            <a href="#" class="btn btn-md btn-salmon tra-salmon-hover" id="commande">Commander</a>
+                            </div>
+                        </div>
+                        </div>
+
+                </div>
+                {% endif%}
+                <!-- END CART CHECKOUT -->
+                <!-- Add this JavaScript code block to your template or include it in a separate JS file -->
+                <script>
+                    $(document).ready(function() {
+                        function updateCartItemCount() {
+                            $.ajax({
+                                url: '/get-cart-item-count', // Replace this with the URL of your controller action to get the cart item count
+                                type: 'GET',
+                                dataType: 'json',
+                                success: function(data) {
+                                    // Update the cart item count in the DOM
+                                    $('#cartItemCount').text(data.itemCount);
+                                },
+                                error: function(error) {
+                                    console.error('Error:', error);
+                                }
+                            });
+                        }
+
+                        // Soumettre le formulaire de commande via AJAX
+                        $('#commande').click(function(event) {
+                            event.preventDefault();
+
+                            // Récupérer les données du formulaire
+                            const formData = $(this).serialize();
+
+                            // Envoyer les données de l'entité Order au serveur via une requête AJAX
+                            $.ajax({
+                                url: '/save-order',
+                                type: 'POST',
+                                data: formData,
+                                dataType: 'json',
+                                success: function(response) {
+                                    if (response.success) {
+                                        // Succès : afficher un message de succès ou rediriger l'utilisateur, etc.
+                                        updateCartItemCount()
+                                        $('.item').closest('tr').remove();
+                                        $('#send').remove();
+                                        $('#confirmationDialog').show();
+                                    } else {
+                                        // Échec : afficher un message d'erreur ou traiter les erreurs retournées par le serveur
+                                        alert('Failed to submit order. Please check the form and try again.');
+                                    }
+                                },
+                                error: function(error) {
+                                    // Afficher un message d'erreur en cas d'erreur AJAX
+                                    alert('An error occurred while submitting the order. Please try again later.');
+                                }
+                            });
+                        });
+                    });
+                </script>
+                <script>
+                    $(document).ready(function() {
+                        // Add to cart
+                        $('.qty').change(function() {
+                            const menuId = $(this).data('menu-id');
+                            const quantity = $(this).val();
+                            updateCartItemQuantity(menuId, quantity);
+                        });
+
+                        // Remove from cart
+                        $('.fa-trash-alt').click(function() {
+                            const menuId = $(this).data('menu-id');
+                            removeCartItem(menuId);
+                        });
+
+                        function updateCartItemQuantity(menuId, quantity) {
+                            $.ajax({
+                                url: `/update-cart-item/${menuId}`,
+                                type: 'POST',
+                                data: { quantity: quantity },
+                                dataType: 'json',
+                                success: function(data) {
+                                    // Update the total price for the cart item
+                                    const total = $(`[data-menu-id="${menuId}"]`).closest('tr').find('.product-price-total h5');
+                                    const pricetext = $(`[data-menu-id="${menuId}"]`).closest('tr').find('.product-price h5');
+                                    const price = parseFloat(pricetext.text());
+                                    total.text((price *quantity).toFixed(2));
+                                    updateCartTotal();
+                                    // Update the total price for all cart items
+                                    updateCartitemTotal(totalElement);
+                                },
+                                error: function(error) {
+                                    console.error('Error:', error);
+                                }
+                            });
+                        }
+
+                        function removeCartItem(menuId) {
+                            $.ajax({
+                                url: `/remove-from-cart/${menuId}`,
+                                type: 'POST',
+                                dataType: 'json',
+                                success: function(data) {
+                                    // Remove the cart item from the table
+                                    $(`[data-menu-id="${menuId}"]`).closest('tr').remove();
+                                    updateCartTotal();
+                                    // Update the total price for all cart items
+                                    updateCartitemTotal();
+                                },
+                                error: function(error) {
+                                    console.error('Error:', error);
+                                }
+                            });
+                        }
+
+                        function updateCartitemTotal(total) {
+
+                            $('#cart-total').text(total);
+                        }
+
+                        function updateCartTotal() {
+                            let total = 0;
+
+                            // Parcourir chaque ligne du tableau de panier
+                            $('.product-price-total h5').each(function() {
+                                const price = parseFloat($(this).text());
+                                total += price;
+                            });
+
+                            // Mettre à jour le total dans l'élément approprié du HTML
+                            $('#cart-total').text(total.toFixed(2));
+                        }
+
+                        // Call the updateCartTotal function when the page loads
+                        updateCartTotal();
+
+                    });
+                </script>
+
+
+
+
+
+            </div>	   <!-- End container -->
+        </section>	<!-- END CART PAGE -->
+
+
+
+
+        <!-- BANNER-3
+        ============================================= -->
+        <section id="banner-3" class="bg-yellow banner-section division">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+
+
+                    <!-- BANNER TEXT -->
+                    <div class="col-md-7 col-lg-6">
+                        <div class="banner-3-txt coffee-color">
+
+                            <!-- Title  -->
+                            <h4 class="h4-xl">Download mobile App and</h4>
+                            <h2>save up to 20%</h2>
+
+                            <!-- Text -->
+                            <p class="p-md">Aliquam a augue suscipit, luctus neque purus ipsum and neque dolor primis libero tempus,
+                                blandit varius
+                            </p>
+
+                            <!-- Store Badges -->
+                            <div class="stores-badge">
+
+                                <!-- AppStore -->
+                                <a href="#" class="store">
+                                    <img class="appstore-original" src="{{asset('assets/images/appstore.png')}}" alt="appstore-logo" />
+                                </a>
+
+                                <!-- Google Play -->
+                                <a href="#" class="store">
+                                    <img class="googleplay-original" src="{{asset('assets/images/googleplay.png')}}" alt="googleplay-logo" />
+                                </a>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- BANNER IMAGE -->
+                    <div class="col-md-5 col-lg-6">
+                        <div class="banner-3-img">
+                            <img class="img-fluid" src="{{asset('assets/images/e-shop.png')}}" alt="banner-image">
+                        </div>
+                    </div>
+
+
+                </div>      <!-- End row -->
+            </div>	    <!-- End container -->
+        </section>	<!-- END BANNER-3 -->
+
+
+        <!-- FOOTER-2
+        ============================================= -->
+        <footer id="contact" class="footer division">
+            <div class="container">
+                <div class="footer-2-holder text-center">
+                    <div class="row">
+
+
+                        <!-- FOOTER INFO -->
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="footer-info mb-30">
+
+                                <!-- Title -->
+                                <h5 class="h5-md">Location</h5>
+
+                                <!-- Address -->
+                                <p>8721 M Central Avenue,</p>
+                                <p>Los Angeles, CA 90036,</p>
+                                <p>United States</p>
+
+                            </div>
+                        </div>
+
+
+                        <!-- WORKING HOURS -->
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="footer-info mb-30">
+
+                                <!-- Title -->
+                                <h5 class="h5-md">Working Hours</h5>
+
+                                <!-- Text -->
+                                <p>Mon-Fri: 9:00AM - 10:00PM</p>
+                                <p>Saturday: 10:00AM - 8:30PM</p>
+                                <p>Sunday: 12:00PM - 5:00PM</p>
+
+                            </div>
+                        </div>
+
+
+                        <!-- FOOTER CONTACTS -->
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="footer-contacts mb-30">
+
+                                <!-- Title -->
+                                <h5 class="h5-md">Order Now</h5>
+
+                                <p>Quaerat neque purus ipsum at neque dolor primis tempus</p>
+                                <p class="mt-5"><span class="yellow-color"><a>789-654-3210</a></span></p>
+
+                            </div>
+                        </div>
+
+
+                        <!-- FOOTER IMAGES -->
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="footer-socials-links mb-30">
+
+                                <!-- Title -->
+                                <h5 class="h5-md">Follow Us</h5>
+
+                                <!-- Text -->
+                                <p>Quaerat neque purus ipsum at neque dolor primis tempus</p>
+
+                                <!-- List -->
+                                <ul class="foo-socials text-center clearfix">
+                                    <li><a href="assets/#" class="ico-facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="assets/#" class="ico-twitter"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="assets/#" class="ico-instagram"><i class="fab fa-instagram"></i></a></li>
+                                    <li><a href="assets/#" class="ico-youtube"><i class="fab fa-youtube"></i></a></li>
+
+                                    <!--
+                                    <li><a href="assets/#" class="ico-dribbble"><i class="fab fa-dribbble"></i></a></li>
+                                    <li><a href="assets/#" class="ico-behance"><i class="fab fa-behance"></i></a></li>
+                                    <li><a href="assets/#" class="ico-linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                                    <li><a href="assets/#" class="ico-tumblr"><i class="fab fa-tumblr"></i></a></li>
+                                    <li><a href="assets/#" class="ico-pinterest"><i class="fab fa-pinterest-p"></i></a></li>
+                                    <li><a href="assets/#" class="ico-google-plus"><i class="fab fa-google-plus-g"></i></a></li>
+                                    <li><a href="assets/#" class="ico-vk"><i class="fab fa-vk"></i></a></li>-->
+                                </ul>
+
+                            </div>
+                        </div>	<!-- END FOOTER IMAGES -->
+
+
+                    </div> <!-- END FOOTER CONTENT -->
+
+
+                    <!-- FOOTER COPYRIGHT -->
+                    <div class="bottom-footer">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-lg-10 offset-lg-1">
+
+                                <!-- Links List -->
+                                <ul class="bottom-footer-list clearfix">
+                                    <li><p>&copy; 2020 Testo. All Rights Reserved</p></li>
+                                    <li><p class="first-li"><a href="assets/#">About Us</a></p></li>
+                                    <li><p><a href="assets/#">Gift Cards</a></p></li>
+                                    <li><p><a href="assets/#">Terms Of Use</a></p></li>
+                                    <li><p class="last-li"><a href="assets/#">Privacy Policy</a></p></li>
+                                </ul>
+
+                            </div>
+                        </div>  <!-- End row -->
+                    </div>	<!-- END FOOTER COPYRIGHT -->
+
+
+                </div>    <!-- End footer-2-holder -->
+            </div>     <!-- End container -->
+        </footer>	<!-- END FOOTER-2 -->
+
+
+
+
+    </div>	<!-- END PAGE CONTENT -->
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-6">
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0 text-center">Menu</h3>
+            </div>
+            <div class="card-body">
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form_label(form.title) }}
+                            {{ form_widget(form.title,{ 'attr': {'class':'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form_label(form.info) }}
+                                {{ form_widget(form.info, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+                            </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form_label(form.prix) }}
+                            {{ form_widget(form.prix,{ 'attr': {'class':'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            {{ form_label(form.imageFile) }}
+                            {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-12">
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </div>
+
+                </div>
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+</div>

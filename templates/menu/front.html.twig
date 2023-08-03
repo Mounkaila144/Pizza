@@ -1,0 +1,1135 @@
+{% extends 'templaite.html.twig' %}
+
+{% block title %}Restauant{% endblock %}
+
+{% block body %}
+    <!-- HEADER-3
+    ============================================= -->
+    <header id="header-3" class="header navik-header header-transparent header-shadow">
+        <div class="container">
+
+
+            <!-- NAVIGATION MENU -->
+            <div class="navik-header-container">
+
+
+                <!-- CALL BUTTON -->
+                <div class="callusbtn"><a ><i class="fas fa-phone"></i></a></div>
+
+
+                <!-- LOGO IMAGE -->
+                <div class="logo" data-mobile-logo="{{asset('assets/images/logo-01.png')}}" data-sticky-logo="{{asset('assets/images/logo-01.png')}}">
+                    <a href="#"><img src="{{asset('assets/images/logo-01.png')}}" alt="header-logo"/></a>
+                </div>
+
+
+                <!-- BURGER MENU -->
+                <div class="burger-menu">
+                    <div class="line-menu line-half first-line"></div>
+                    <div class="line-menu"></div>
+                    <div class="line-menu line-half last-line"></div>
+                </div>
+
+
+                <!-- MAIN MENU -->
+                <nav class="navik-menu menu-caret navik-yellow">
+                    <ul class="top-list">
+
+                        <!-- DROPDOWN MENU -->
+                        <li><a href="{{ path('app_front') }}" class="home">Home</a>
+                            {# Check if the user is authenticated and has the "admin" role #}
+                            {% if is_granted('ROLE_ADMIN') %}
+                        <li><a href="{{ path('app_order_index') }}" class="home">Admin</a></li>
+                        {% endif %}
+
+                        <!-- DROPDOWN MENU -->
+                        <li><a href="#" class="menu">Nos Menu</a>
+
+                        </li>
+
+                        <!-- MEGA MENU -->
+                        <li class="mega-menu"><a class="evenement" href="#">Evenement</a>
+                        </li>	<!-- END MEGA MENU -->
+
+                        <!-- DROPDOWN MENU -->
+                        <li><a href="#" class="galery">galery</a>
+
+                        </li>
+
+                        <!-- DROPDOWN MENU -->
+                        <li><a href="#" class="contact">Contacts</a>
+                            {% if app.user %}
+                        <li><a href="{{ path('app_logout') }}" class="contact text-error">Déconnexion</a></li>
+                        <li class="basket-ico ico-30">
+                            <a href="{{ path('app_front_cart') }}">
+                                <span class="ico-holder"><span class="flaticon-shopping-bag"></span> <em class="roundpoint" id="cartItemCount">{{ cart|length }}</em></span>
+                            </a>
+                        </li>
+                        {% else %}
+                            <li><a href="{{ path('app_login') }}" class="contact">Connexion</a></li>
+                            <li><a href="{{ path('app_register') }}" class="contact">Inscription</a></li>
+
+                        {% endif %}
+
+
+
+
+                    </ul>
+                </nav>
+
+
+            </div>
+
+
+        </div>
+    </header>	<!-- END HEADER-3 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function scrollToSection(sectionId) {
+                var element = document.querySelector(sectionId);
+                if (element) {
+                    var topOffset = element.getBoundingClientRect().top + window.pageYOffset;
+                    window.scroll({ top: topOffset, behavior: 'smooth' });
+                }
+            }
+            // Replace the class names in the following event listeners
+            document.querySelector('.menu').addEventListener('click', function(e) {
+                e.preventDefault();
+                scrollToSection('#menu');
+            });
+            // Replace the class names in the following event listeners
+            document.querySelector('.contact').addEventListener('click', function(e) {
+                e.preventDefault();
+                scrollToSection('#contact');
+            });
+
+            document.querySelector('.evenement').addEventListener('click', function(e) {
+                e.preventDefault();
+                scrollToSection('#evenement');
+            });
+
+            document.querySelector('.galery').addEventListener('click', function(e) {
+                e.preventDefault();
+                scrollToSection('#galery');
+            });
+        });
+    </script>
+
+
+
+    <!-- PAGE CONTENT
+    ============================================= -->
+    <div id="page" class="page">
+
+
+
+        <!-- HERO-4
+        ============================================= -->
+        <section id="hero-4" class="bg-fixed hero-section division">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    <!-- HERO IMAGE -->
+                    <div class="col-md-7">
+                        <div class="hero-4-img text-center">
+                            <img class="img-fluid" src="assets/images/hero-4-img.png" alt="hero-image">
+                        </div>
+                    </div>
+                    <!-- HERO TEXT -->
+                    <div class="col-md-5">
+                        <div class="hero-4-txt text-center white-color">
+                            <!-- Title -->
+                            <h2 >Houda</h2>
+                            <h3>nom</h3>
+                            <!-- Text -->
+                            <p class="p-md">Chez Nom du restaurant, nous sommes passionnés par la cuisine et nous nous engageons à offrir à nos clients une expérience gastronomique inoubliable. Nos plats savoureux, préparés avec des ingrédients frais et de qualité, vous feront découvrir de nouvelles saveurs et satisferont vos papilles.</p>
+                            <!-- Button -->
+                            <a href="assets/product-single.html" class="btn btn-md btn-yellow tra-white-hover">Commander maintenant</a>
+                        </div>
+                    </div><!-- END HERO TEXT -->
+                </div><!-- End row -->
+            </div><!-- End container -->
+        </section><!-- END HERO-4 -->
+
+        <!-- MENU-6
+        ============================================= -->
+        <section id="menu" class="wide-70 menu-section division">
+            <div class="container">
+                <!-- TITRE DE LA SECTION -->
+                <div class="row">
+                    <div class="col-lg-10 offset-lg-1">
+                        <div class="section-title mb-60 text-center">
+                            <!-- Titre -->
+                            <h2 class="h2-xl red-color">Nos Burgers Originaux</h2>
+                            <!-- Texte -->
+                            <p class="p-xl">Découvrez notre sélection de burgers uniques et savoureux. Préparés avec passion et des ingrédients frais, nos burgers sont un régal pour les papilles.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for menu in menus %}
+                        <!-- ITEM DU MENU #{{ loop.index }} -->
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="menu-6-item bg-white">
+                                <!-- IMAGE -->
+                                <div class="menu-6-img rel">
+                                    <div class="hover-overlay">
+                                        <!-- Image -->
+                                        <img height="200" width="200" src="{{  vich_uploader_asset(menu, 'imageFile') }}" alt="{{ menu.title }}">
+                                        <!-- Code de l'item -->
+                                        <span class="item-code bg-tra-dark">Code : {{ menu.id }}</span>
+                                        <!-- Icône de zoom -->
+                                        <div class="menu-img-zoom ico-25">
+                                            <a href="{{  vich_uploader_asset(menu, 'imageFile') }}" class="image-link">
+                                                <span class="flaticon-zoom"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- TEXTE -->
+                                <div class="menu-6-txt rel">
+                                    <!-- Note -->
+                                    <div class="item-rating">
+                                        <div class="stars-rating stars-lg">
+                                            <!-- Votre code pour afficher la note -->
+                                        </div>
+                                    </div>
+                                    <!-- Icône J'aime -->
+                                    <div class="like-ico ico-25">
+                                        <!-- Votre code pour l'icône J'aime -->
+                                    </div>
+                                    <!-- Titre -->
+                                    <h5 class="h5-sm">{{ menu.title }}</h5>
+                                    <!-- Description -->
+                                    <p class="grey-color">{{ menu.info }}</p>
+                                    <!-- Prix -->
+                                    <div class="menu-6-price bg-coffee">
+                                        <h5 class="h5-xs yellow-color">{{ menu.prix }} $</h5>
+                                    </div>
+                                    <!-- Ajouter au panier -->
+                                    <div class="">
+
+                                    {% set cartItem = cart[menu.id] ?? null %}
+                                    {% if cartItem is not null and cartItem.quantity > 0 %}
+                                        <a href="{{ path('add_to_cart', {'id': menu.id}) }}" class="btn btn-sm btn-success">
+                                            <i class="fas fa-check text-warning"></i>  </a>
+                                    {% else %}
+                                        <a href="{{ path('add_to_cart', {'id': menu.id}) }}" class="btn btn-sm btn-primary">
+                                              <i class="fas fa-cart-plus text-warning"></i>  </a>
+                                    {% endif %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div><!-- FIN DE L'ITEM DU MENU #{{ loop.index }} -->
+                    {% endfor %}
+                </div><!-- Fin de la rangée -->
+
+            </div><!-- Fin du conteneur -->
+        </section><!-- FIN DU MENU-6 -->
+        <script>
+            $(document).ready(function() {
+                function updateCartItemCount() {
+                    $.ajax({
+                        url: '/get-cart-item-count', // Replace this with the URL of your controller action to get the cart item count
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(data) {
+                            // Update the cart item count in the DOM
+                            $('#cartItemCount').text(data.itemCount);
+                        },
+                        error: function(error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                }
+
+                $('.add-to-cart-link').on('click', function(e) {
+                    e.preventDefault(); // Prevent the default behavior of the anchor link
+                    const menuId = $(this).data('menu-id');
+                    const quantityInput = $(`#quantity-${menuId}`);
+                    const quantity = parseInt(quantityInput.val(), 10);
+                    addToCart(menuId, quantity, quantityInput);
+                    updateCartItemCount()
+                });
+
+                function addToCart(menuId, quantity, quantityInput) {
+                    // Perform an AJAX request to your Symfony controller to add the item to the cart
+                    $.ajax({
+                        url: `/add-to-cart/${menuId}`,
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { quantity: quantity }, // Send the quantity as an object in the request data
+                        success: function(data) {
+                            // Handle the response and update the button text
+                            console.log(data);
+                            quantityInput.val(data.quantity); // Update the quantity input field with the updated quantity
+                            updateButtonStatesFromLocalStorage()
+                            // Update the cart state in local storage
+                            updateCartInLocalStorage(menuId, data.quantity);
+                        },
+                        error: function(error) {
+                            console.error('Error:', error);
+                        }
+                    });
+                }
+
+                // Function to update the cart state in local storage
+                function updateCartInLocalStorage(menuId, quantity) {
+                    const cartData = JSON.parse(localStorage.getItem('cart')) || {};
+                    cartData[menuId] = quantity;
+                    localStorage.setItem('cart', JSON.stringify(cartData));
+                }
+
+                // On page load, update the button texts based on the cart state stored in local storage
+                function updateButtonStatesFromLocalStorage() {
+                    const cartData = JSON.parse(localStorage.getItem('cart')) || {};
+                    for (const menuId in cartData) {
+                        const btnText = $(`#btnText_${menuId}`);
+                        if (cartData[menuId] > 0) {
+                            btnText.html(`<i class="fas fa-check"></i> ${cartData[menuId]} Ajouté`);
+                        } else {
+                            btnText.html(`<i class="fas fa-cart-plus"></i> Ajouter`);
+                        }
+                    }
+                }
+
+                // Call the updateButtonStatesFromLocalStorage function on page load
+                updateButtonStatesFromLocalStorage();
+            });
+        </script>
+        <!-- PROMO-2
+        ============================================= -->
+        <section id="promo-2" class="promo-section division">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    <!-- PROMO BOX-1 -->
+                    <div class="col-md-6 col-lg-5">
+                        <div id="pb-2-1" class="pbox-2 bg-fixed">
+                            <div class="pbox-2-txt brown-color">
+                                <h4 class="h5-lg txt-300">Obtenez vos</h4>
+                                <h4 class="h6-xl">Frites au fromage a des bon prix</h4>
+                                <a href="#" class="btn btn-red tra-red-hover">En savoir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- PROMO BOX-2 -->
+                    <div class="col-md-6 col-lg-7">
+                        <div id="pb-2-2" class="pbox-2 bg-fixed">
+                            <div class="pbox-2-txt brown-color">
+                                <h4 class="h5-lg txt-300">Le</h4>
+                                <h4 class="h6-xl">Burger au poulet croustillant est de retour !</h4>
+                                <a href="#" class="btn btn-red tra-red-hover">En savoir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End row -->
+            </div><!-- End container -->
+        </section><!-- END PROMO-2 -->
+
+
+
+
+        <!-- PROMO-4
+        ============================================= -->
+        <div id="promo-4" class="wide-100 promo-section division">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+
+
+                    <!-- PROMO IMAGE-1 -->
+                    <div class="col-md-4">
+                        <a href="assets/menu-3.html">
+                            <div class="pbox-4">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/offer-8.jpg" alt="promo-image" />
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <!-- PROMO IMAGE-2 -->
+                    <div class="col-md-4">
+                        <a href="assets/menu-3.html">
+                            <div class="pbox-4">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/offer-6.jpg" alt="promo-image" />
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+                    <!-- PROMO IMAGE-3 -->
+                    <div class="col-md-4">
+                        <a href="assets/menu-3.html">
+                            <div class="pbox-4 pbox-4-last">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/offer-7.jpg" alt="promo-image" />
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+                </div> <!-- End row -->
+            </div>  <!-- End container -->
+        </div>	<!-- END PROMO-4 -->
+
+
+
+
+        <!-- ABOUT-3
+        ============================================= -->
+        <section id="about-3" class="bg-lightgrey wide-60 about-section division">
+            <div class="container">
+                <div class="row d-flex align-items-center">
+                    <!-- IMAGE À PROPOS -->
+                    <div class="col-md-5 col-lg-6">
+                        <div class="about-3-img text-center mb-40">
+                            <img class="img-fluid" src="assets/images/about-01-img.png" alt="image-a-propos">
+                        </div>
+                    </div>
+                    <!-- TEXTE À PROPOS -->
+                    <div class="col-md-7 col-lg-6">
+                        <div class="about-3-txt mb-40">
+                            <!-- Titre -->
+                            <h2 class="h2-sm">Une expérience culinaire exceptionnelle</h2>
+                            <!-- Texte -->
+                            <p class="p-md">Chez [Nom du restaurant], nous croyons que la nourriture est une passion partagée qui rassemble les gens. Nous nous efforçons de créer une expérience culinaire exceptionnelle en préparant des plats délicieux avec des ingrédients de qualité supérieure. Notre objectif est de vous offrir une explosion de saveurs dans chaque bouchée.</p>
+                            <!-- Liste -->
+                            <ul class="txt-list">
+                                <li class="list-item">
+                                    <p class="p-md">Une sélection soigneusement élaborée de plats préparés avec des ingrédients frais et de saison.</p>
+                                </li>
+                                <li class="list-item">
+                                    <p class="p-md">Des recettes uniques qui allient tradition et innovation pour des saveurs surprenantes.</p>
+                                </li>
+                                <li class="list-item">
+                                    <p class="p-md">Un service chaleureux et attentionné pour que votre expérience soit mémorable à chaque visite.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!-- FIN DU TEXTE À PROPOS -->
+                </div><!-- Fin de la rangée -->
+            </div><!-- Fin du conteneur -->
+        </section><!-- FIN DE ABOUT-3 -->
+
+        <!-- DIVIDER-4
+        ============================================= -->
+        <div id="div-04" class="bg-scroll division"></div>
+
+        <!-- BLOG-1
+        ============================================= -->
+        <section id="evenement" class="wide-60 blog-section division">
+            <div class="container">
+                <!-- TITRE DE LA SECTION -->
+                <div class="row">
+                    <div class="col-lg-10 offset-lg-1">
+                        <div class="section-title mb-60 text-center">
+                            <!-- Titre -->
+                            <h2 class="h2-xl red-color">Événements & Traiteur</h2>
+                            <!-- Texte -->
+                            <p class="p-xl">Vivez une expérience culinaire exceptionnelle avec nos services d'événements et de traiteur. Nous vous proposons des menus personnalisés, préparés avec soin, pour rendre chaque occasion spéciale et mémorable.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- CONTENEUR DES ARTICLES DE BLOG -->
+                <div class="row">
+                    <!-- ARTICLE DE BLOG #1 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="blog-post">
+                            <!-- IMAGE DE L'ARTICLE DE BLOG -->
+                            <div class="blog-post-img">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/blog/img-01.jpg" alt="image-article-blog" />
+                                </div>
+                            </div>
+                            <!-- TITRE DE L'ARTICLE DE BLOG -->
+                            <div class="blog-post-txt">
+                                <!-- Titre de l'article -->
+                                <h5 class="h5-lg"><a href="assets/single-post.html">Découvrez nos créations uniques</a></h5>
+                                <!-- Texte de l'article -->
+                                <p class="grey-color">Laissez-vous séduire par nos créations culinaires uniques et savoureuses, conçues spécialement pour vos événements spéciaux.</p>
+                            </div>
+                        </div>
+                    </div><!-- FIN DE L'ARTICLE DE BLOG #1 -->
+                    <!-- ARTICLE DE BLOG #2 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="blog-post">
+                            <!-- IMAGE DE L'ARTICLE DE BLOG -->
+                            <div class="blog-post-img">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/blog/img-02.jpg" alt="image-article-blog" />
+                                </div>
+                            </div>
+                            <!-- TEXTE DE L'ARTICLE DE BLOG -->
+                            <div class="blog-post-txt">
+                                <!-- Titre de l'article -->
+                                <h5 class="h5-lg"><a href="assets/single-post.html">Laissez-nous prendre soin de vous</a></h5>
+                                <!-- Texte de l'article -->
+                                <p class="grey-color">Profitez de nos services de traiteur professionnels pour vos événements spéciaux. Nous nous occupons de chaque détail pour que vous puissiez vous détendre et profiter de l'expérience culinaire.</p>
+                            </div>
+                        </div>
+                    </div><!-- FIN DE L'ARTICLE DE BLOG #2 -->
+                    <!-- ARTICLE DE BLOG #3 -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="blog-post">
+                            <!-- IMAGE DE L'ARTICLE DE BLOG -->
+                            <div class="blog-post-img">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/blog/img-03.jpg" alt="image-article-blog" />
+                                </div>
+                            </div>
+                            <!-- TEXTE DE L'ARTICLE DE BLOG -->
+                            <div class="blog-post-txt">
+                                <!-- Titre de l'article -->
+                                <h5 class="h5-lg"><a href="assets/single-post.html">Un service sur mesure</a></h5>
+                                <!-- Texte de l'article -->
+                                <p class="grey-color">Nous nous adaptons à vos besoins et préférences pour vous offrir un service traiteur sur mesure. Faites confiance à notre équipe expérimentée pour rendre votre événement inoubliable.</p>
+                            </div>
+                        </div>
+                    </div><!-- FIN DE L'ARTICLE DE BLOG #3 -->
+                </div><!-- FIN DU CONTENEUR DES ARTICLES DE BLOG -->
+            </div><!-- Fin du conteneur -->
+        </section><!-- FIN DE BLOG-1 -->
+        <!-- BRANDS-1
+        ============================================= -->
+        <div id="brands-1" class="bg-lightgrey brands-section division">
+            <div class="container">
+                <div class="row">
+                    <div class="col text-center">
+                        <div class="owl-carousel brands-carousel">
+
+
+                            <!-- BRAND LOGO IMAGE -->
+                            <div class="brand-logo">
+                                <img class="img-fluid" src="assets/images/brand-11.png" alt="brand-logo" />
+                            </div>
+
+                            <!-- BRAND LOGO IMAGE -->
+                            <div class="brand-logo">
+                                <img class="img-fluid" src="assets/images/brand-12.png" alt="brand-logo" />
+                            </div>
+
+                            <!-- BRAND LOGO IMAGE -->
+                            <div class="brand-logo">
+                                <img class="img-fluid" src="assets/images/brand-13.png" alt="brand-logo" />
+                            </div>
+
+                            <!-- BRAND LOGO IMAGE -->
+                            <div class="brand-logo">
+                                <img class="img-fluid" src="assets/images/brand-14.png" alt="brand-logo" />
+                            </div>
+
+                            <!-- BRAND LOGO IMAGE -->
+                            <div class="brand-logo">
+                                <img class="img-fluid" src="assets/images/brand-15.png" alt="brand-logo">
+                            </div>
+
+                            <!-- BRAND LOGO IMAGE -->
+                            <div class="brand-logo">
+                                <img class="img-fluid" src="assets/images/brand-16.png" alt="brand-logo" />
+                            </div>
+
+                            <!-- BRAND LOGO IMAGE -->
+                            <div class="brand-logo">
+                                <img class="img-fluid" src="assets/images/brand-17.png" alt="brand-logo" />
+                            </div>
+
+                            <!-- BRAND LOGO IMAGE -->
+                            <div class="brand-logo">
+                                <img class="img-fluid" src="assets/images/brand-18.png" alt="brand-logo" />
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>      <!-- End row -->
+            </div>	    <!-- End container -->
+        </div>	<!-- END BRANDS-1 -->
+
+        <!-- TESTIMONIALS-1
+        ============================================= -->
+        <div id="reviews-1" class="bg-image bg-scroll reviews-section division">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 testimonials white-color">
+
+
+                        <!-- TRANSPARENT QUOTE ICON -->
+                        <div class="quote-icon"></div>
+
+
+                        <!-- TESTIMONIALS CONTENT -->
+                        <div class="flexslider">
+                            <ul class="slides text-center">
+
+                                <!-- AVIS-1 -->
+                                <li class="review-1">
+                                    <div class="review-1-txt">
+
+                                        <!-- Testimonial Author Avatar -->
+                                        <img src="assets/images/review-author-1.jpg" alt="testimonial-avatar">
+
+                                        <!-- Text -->
+                                        <p>"Il n'y a rien de tel que l'expérience d'un bon repas pour éveiller tous vos sens, transportant votre palais dans un voyage gustatif exquis. C'est exactement ce que j'ai ressenti en dégustant les plats incroyables de ce restaurant. Chaque bouchée était un délice divin, et j'ai été totalement conquis."
+                                        </p>
+
+                                        <!-- Rating -->
+                                        <div class="review-rating">
+                                            <div class="stars-rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                            </div>
+                                        </div>
+
+                                        <!-- Testimonial Author -->
+                                        <p class="testimonial-autor">par Sean McMarthy</p>
+
+                                    </div>
+                                </li>
+
+                                <!-- AVIS-2 -->
+                                <li class="review-1">
+                                    <div class="review-1-txt">
+
+                                        <!-- Testimonial Author Avatar -->
+                                        <img src="assets/images/review-author-2.jpg" alt="testimonial-avatar">
+
+                                        <!-- Text -->
+                                        <p>"Lorsque j'ai découvert ce restaurant, j'ai été époustouflé par la qualité et la créativité des plats. Chaque assiette était une véritable œuvre d'art culinaire, préparée avec amour et passion. Chaque bouchée était une explosion de saveurs qui a ravi mes papilles. Je suis tombé amoureux de ce lieu et je le recommande vivement à tous les amateurs de bonne cuisine."
+                                        </p>
+
+                                        <!-- Rating -->
+                                        <div class="review-rating">
+                                            <div class="stars-rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                        </div>
+
+                                        <!-- Testimonial Author -->
+                                        <p class="testimonial-autor">par Evelyn Martinez</p>
+
+                                    </div>
+
+                                </li>
+
+                                <!-- AVIS-3 -->
+                                <li class="review-1">
+                                    <div class="review-1-txt">
+
+                                        <!-- Testimonial Author Avatar -->
+                                        <img src="assets/images/review-author-3.jpg" alt="testimonial-avatar">
+
+                                        <!-- Text -->
+                                        <p>"Ce restaurant est une véritable perle rare. Les plats sont préparés avec une maîtrise inégalée, et chaque ingrédient est soigneusement choisi pour créer des combinaisons de saveurs uniques. Les chefs sont de véritables artistes culinaires, capables de transformer des ingrédients simples en des plats extraordinaires. Je suis constamment surpris par leur créativité et leur passion pour la cuisine."
+                                        </p>
+
+                                        <!-- Rating -->
+                                        <div class="review-rating">
+                                            <div class="stars-rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                            </div>
+                                        </div>
+
+                                        <!-- Testimonial Author -->
+                                        <p class="testimonial-autor">par Robert Peterson</p>
+
+                                    </div>
+
+                                </li>
+
+                                <!-- AVIS-4 -->
+                                <li class="review-1">
+                                    <div class="review-1-txt">
+
+                                        <!-- Testimonial Author Avatar -->
+                                        <img src="assets/images/review-author-4.jpg" alt="testimonial-avatar">
+
+                                        <!-- Text -->
+                                        <p>"Ce restaurant est tout simplement exceptionnel. Chaque visite est une expérience gastronomique inoubliable. Les plats sont magnifiquement présentés et délicieusement savoureux. Les saveurs se marient harmonieusement pour créer des combinaisons uniques et délectables. Chaque bouchée est un véritable délice pour les papilles. Je suis toujours enchanté par la qualité et l'originalité des plats servis ici."
+                                        </p>
+
+                                        <!-- Rating -->
+                                        <div class="review-rating">
+                                            <div class="stars-rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                            </div>
+                                        </div>
+
+                                        <!-- Testimonial Author -->
+                                        <p class="testimonial-autor">par Leslie Serpas</p>
+
+                                    </div>
+
+                                </li>
+
+                                <!-- AVIS-5 -->
+                                <li class="review-1">
+                                    <div class="review-1-txt">
+
+                                        <!-- Testimonial Author Avatar -->
+                                        <img src="assets/images/review-author-5.jpg" alt="testimonial-avatar">
+
+                                        <!-- Text -->
+                                        <p>"Ce restaurant est une véritable pépite culinaire. Chaque plat est préparé avec une attention méticuleuse aux détails, et le résultat est tout simplement sensationnel. Les saveurs sont parfaitement équilibrées et les textures sont un pur délice. Chaque visite dans ce restaurant est une expérience culinaire magique qui transporte mes papilles dans un monde de délices."
+                                        </p>
+
+                                        <!-- Rating -->
+                                        <div class="review-rating">
+                                            <div class="stars-rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                        </div>
+
+                                        <!-- Testimonial Author -->
+                                        <p class="testimonial-autor">par Amelie Newlove</p>
+
+                                    </div>
+
+                                </li>
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>     <!-- End row -->
+            </div>     <!-- End container -->
+        </div>
+
+        <!-- END TESTIMONIALS-1 -->
+        <!-- GALLERY-2
+        ============================================= -->
+        <section id="galery" class="gallery-section division">
+            <div class="container">
+
+
+                <!-- SECTION TITLE -->
+                <div class="row">
+                    <div class="col-lg-10 offset-lg-1">
+                        <div class="section-title mb-60 text-center">
+                            <!-- Titre -->
+                            <h2 class="h2-xl red-color">Galerie d'images</h2>
+                            <!-- Texte -->
+                            <p class="p-xl">Découvrez notre collection d'images captivantes.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- IMAGES HOLDER -->
+                <div class="row">
+
+
+                    <!-- IMAGE #1 -->
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="gallery-img">
+                            <a href="assets/images/gallery/img-01.jpg" class="image-link">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/gallery/img-01.jpg" alt="gallery-image" />
+                                    <div class="item-overlay"></div>
+
+                                    <!-- Image Meta -->
+                                    <div class="img-meta white-color">
+                                        <h5 class="h5-xs">Classic California</h5>
+                                        <div class="txt-block-rating">
+                                            <div class="stars-rating">
+                                                <span>4.5</span>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                                <span>(23)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <!-- IMAGE #2 -->
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="gallery-img">
+                            <a href="assets/images/gallery/img-02.jpg" class="image-link">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/gallery/img-02.jpg" alt="gallery-image" />
+                                    <div class="item-overlay"></div>
+
+                                    <!-- Image Meta -->
+                                    <div class="img-meta white-color">
+                                        <h5 class="h5-xs">Margherita Pizza</h5>
+                                        <div class="txt-block-rating">
+                                            <div class="stars-rating">
+                                                <span>4.52</span>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                                <span>(58)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <!-- IMAGE #3 -->
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="gallery-img">
+                            <a href="assets/images/gallery/img-03.jpg" class="image-link">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/gallery/img-03.jpg" alt="gallery-image" />
+                                    <div class="item-overlay"></div>
+
+                                    <!-- Image Meta -->
+                                    <div class="img-meta white-color">
+                                        <h5 class="h5-xs">Grilled Ribs</h5>
+                                        <div class="txt-block-rating">
+                                            <div class="stars-rating">
+                                                <span>4.9</span>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <span>(69)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <!-- IMAGE #4 -->
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="gallery-img">
+                            <a href="assets/images/gallery/img-04.jpg" class="image-link">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/gallery/img-04.jpg" alt="gallery-image" />
+                                    <div class="item-overlay"></div>
+
+                                    <!-- Image Meta -->
+                                    <div class="img-meta white-color">
+                                        <h5 class="h5-xs">Field Greens Pizza</h5>
+                                        <div class="txt-block-rating">
+                                            <div class="stars-rating">
+                                                <span>4.38</span>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                                <span>(41)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <!-- IMAGE #5 -->
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="gallery-img">
+                            <a href="assets/images/gallery/img-05.jpg" class="image-link">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/gallery/img-05.jpg" alt="gallery-image" />
+                                    <div class="item-overlay"></div>
+
+                                    <!-- Image Meta -->
+                                    <div class="img-meta white-color">
+                                        <h5 class="h5-xs">Mini Chicken Pizza</h5>
+                                        <div class="txt-block-rating">
+                                            <div class="stars-rating">
+                                                <span>5</span>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <span>(86)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <!-- IMAGE #6 -->
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="gallery-img">
+                            <a href="assets/images/gallery/img-06.jpg" class="image-link">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/gallery/img-06.jpg" alt="gallery-image" />
+                                    <div class="item-overlay"></div>
+
+                                    <!-- Image Meta -->
+                                    <div class="img-meta white-color">
+                                        <h5 class="h5-xs">Eggs Benedict Burger</h5>
+                                        <div class="txt-block-rating">
+                                            <div class="stars-rating">
+                                                <span>4.65</span>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                                <span>(30)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <!-- IMAGE #7 -->
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="gallery-img">
+                            <a href="assets/images/gallery/img-07.jpg" class="image-link">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/gallery/img-07.jpg" alt="gallery-image" />
+                                    <div class="item-overlay"></div>
+
+                                    <!-- Image Meta -->
+                                    <div class="img-meta white-color">
+                                        <h5 class="h5-xs">Double Bacon Burger</h5>
+                                        <div class="txt-block-rating">
+                                            <div class="stars-rating">
+                                                <span>4.85</span>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <span>(71)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <!-- IMAGE #8 -->
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="gallery-img">
+                            <a href="assets/images/gallery/img-08.jpg" class="image-link">
+                                <div class="hover-overlay">
+                                    <img class="img-fluid" src="assets/images/gallery/img-08.jpg" alt="gallery-image" />
+                                    <div class="item-overlay"></div>
+
+                                    <!-- Image Meta -->
+                                    <div class="img-meta white-color">
+                                        <h5 class="h5-xs">Classic California</h5>
+                                        <div class="txt-block-rating">
+                                            <div class="stars-rating">
+                                                <span>4.64</span>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                                <span>(17)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </div>	<!-- END IMAGES HOLDER -->
+
+
+            </div>	   <!-- End container -->
+        </section>	<!-- END GALLERY-2 -->
+
+        <!-- BANNER-4
+        ============================================= -->
+        <section id="banner-4" class="bg-fixed wide-100 banner-section division">
+            <div class="container">
+                <div class="row">
+                    <!-- TEXTE DE LA BANNIÈRE -->
+                    <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+                        <div class="banner-4-txt text-center">
+                            <!-- Titre -->
+                            <h4 class="h4-xl">Satisfaction garantie</h4>
+                            <!-- Titre -->
+                            <h2>Livraison en 30 minutes !</h2>
+                            <!-- Texte -->
+                            <p class="p-lg">Nous vous garantissons une livraison en 30 minutes. Aliquam a augue suscipit,
+                                luctus neque purus ipsum neque undo dolor primis libero tempus, blandit a cursus varius luctus neque
+                                magna.</p>
+                            <!-- Bouton d'appel -->
+                            <a href="assets/tel:123456789" class="btn btn-lg btn-red tra-red-hover">Appeler : 789-654-3210</a>
+                        </div>
+                    </div>
+                </div> <!-- Fin de la ligne -->
+            </div> <!-- Fin du container -->
+        </section> <!-- FIN DE LA BANNIÈRE-4 -->
+
+
+
+        <!-- FOOTER-2
+        ============================================= -->
+        <footer id="contact" class="footer division">
+            <div class="container">
+                <div class="footer-2-holder text-center">
+                    <div class="row">
+
+
+                        <!-- FOOTER INFO -->
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="footer-info mb-30">
+
+                                <!-- Title -->
+                                <h5 class="h5-md">Location</h5>
+
+                                <!-- Address -->
+                                <p>8721 M Central Avenue,</p>
+                                <p>Los Angeles, CA 90036,</p>
+                                <p>United States</p>
+
+                            </div>
+                        </div>
+
+
+                        <!-- WORKING HOURS -->
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="footer-info mb-30">
+
+                                <!-- Title -->
+                                <h5 class="h5-md">Working Hours</h5>
+
+                                <!-- Text -->
+                                <p>Mon-Fri: 9:00AM - 10:00PM</p>
+                                <p>Saturday: 10:00AM - 8:30PM</p>
+                                <p>Sunday: 12:00PM - 5:00PM</p>
+
+                            </div>
+                        </div>
+
+
+                        <!-- FOOTER CONTACTS -->
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="footer-contacts mb-30">
+
+                                <!-- Title -->
+                                <h5 class="h5-md">Order Now</h5>
+
+                                <p>Quaerat neque purus ipsum at neque dolor primis tempus</p>
+                                <p class="mt-5"><span class="yellow-color"><a>789-654-3210</a></span></p>
+
+                            </div>
+                        </div>
+
+
+                        <!-- FOOTER IMAGES -->
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="footer-socials-links mb-30">
+
+                                <!-- Title -->
+                                <h5 class="h5-md">Follow Us</h5>
+
+                                <!-- Text -->
+                                <p>Quaerat neque purus ipsum at neque dolor primis tempus</p>
+
+                                <!-- List -->
+                                <ul class="foo-socials text-center clearfix">
+                                    <li><a href="assets/#" class="ico-facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="assets/#" class="ico-twitter"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="assets/#" class="ico-instagram"><i class="fab fa-instagram"></i></a></li>
+                                    <li><a href="assets/#" class="ico-youtube"><i class="fab fa-youtube"></i></a></li>
+
+                                    <!--
+                                    <li><a href="assets/#" class="ico-dribbble"><i class="fab fa-dribbble"></i></a></li>
+                                    <li><a href="assets/#" class="ico-behance"><i class="fab fa-behance"></i></a></li>
+                                    <li><a href="assets/#" class="ico-linkedin"><i class="fab fa-linkedin-in"></i></a></li>
+                                    <li><a href="assets/#" class="ico-tumblr"><i class="fab fa-tumblr"></i></a></li>
+                                    <li><a href="assets/#" class="ico-pinterest"><i class="fab fa-pinterest-p"></i></a></li>
+                                    <li><a href="assets/#" class="ico-google-plus"><i class="fab fa-google-plus-g"></i></a></li>
+                                    <li><a href="assets/#" class="ico-vk"><i class="fab fa-vk"></i></a></li>-->
+                                </ul>
+
+                            </div>
+                        </div>	<!-- END FOOTER IMAGES -->
+
+
+                    </div> <!-- END FOOTER CONTENT -->
+
+
+                    <!-- FOOTER COPYRIGHT -->
+                    <div class="bottom-footer">
+                        <div class="row d-flex align-items-center">
+                            <div class="col-lg-10 offset-lg-1">
+
+                                <!-- Links List -->
+                                <ul class="bottom-footer-list clearfix">
+                                    <li><p>&copy; 2020 Testo. All Rights Reserved</p></li>
+                                    <li><p class="first-li"><a href="assets/#">About Us</a></p></li>
+                                    <li><p><a href="assets/#">Gift Cards</a></p></li>
+                                    <li><p><a href="assets/#">Terms Of Use</a></p></li>
+                                    <li><p class="last-li"><a href="assets/#">Privacy Policy</a></p></li>
+                                </ul>
+
+                            </div>
+                        </div>  <!-- End row -->
+                    </div>	<!-- END FOOTER COPYRIGHT -->
+
+
+                </div>    <!-- End footer-2-holder -->
+            </div>     <!-- End container -->
+        </footer>	<!-- END FOOTER-2 -->
+
+
+
+
+    </div>	<!-- END PAGE CONTENT -->
+
+{% endblock %}

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[249],{669:(a,e,t)=>{t(1920),t(6919);var u=t(9755);t.g.$=t.g.jQuery=u,u(document).ready((function(){u(".table-datatable").dataTable()}))}},a=>{a.O(0,[229],(()=>{return e=669,a(a.s=e);var e}));a.O()}]);

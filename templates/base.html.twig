@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-layout="horizontal" data-topbar="dark" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+            <meta charset="utf-8" />
+            <title>Dashboard | Velzon - Admin & Dashboard Template</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+            <meta content="Themesbrand" name="author" />
+            <!-- App favicon -->
+            <link rel="shortcut icon" href="admin/images/favicon.ico">
+
+            <!-- jsvectormap css -->
+            <link href="{{asset('admin/libs/jsvectormap/css/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
+
+            <!--Swiper slider css-->
+            <link href="{{asset('admin/libs/swiper/swiper-bundle.min.css')}}" rel="stylesheet" type="text/css" />
+
+            <!-- Layout config Js -->
+            <script src="{{asset('admin/js/layout.js')}}"></script>
+            <!-- Bootstrap Css -->
+            <link href="{{asset('admin/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+            <!-- Icons Css -->
+            <link href="{{asset('admin/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+            <!-- App Css-->
+            <link href="{{asset('admin/css/app.min.css')}}" rel="stylesheet" type="text/css" />
+            <!-- custom Css-->
+            <link href="{{asset('admin/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
+
+            <style>
+                .checkmark-container {
+                    width: 52px;
+                    height: 52px;
+                    position: relative;
+                }
+
+                .checkmark path {
+                    stroke-dasharray: 48;
+                    stroke-dashoffset: 48;
+                    stroke-width: 4;
+                    stroke-miterlimit: 10;
+                    stroke: #7ac142;
+                    fill: none;
+                    animation: draw-check 0.6s ease-out forwards;
+                }
+
+                @keyframes draw-check {
+                    100% {
+                        stroke-dashoffset: 0;
+                    }
+                }
+
+
+            </style>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+
+
+    </head>
+    <body>    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        {% include "admin/template/navbar.html.twig" %}
+
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+
+                {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% include "admin/template/setting.html.twig" %}
+
+
+        <!-- JAVASCRIPT -->
+        <script src="{{asset('admin/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <script src="{{asset('admin/libs/simplebar/simplebar.min.js')}}"></script>
+        <script src="{{asset('admin/libs/node-waves/waves.min.js')}}"></script>
+        <script src="{{asset('admin/libs/feather-icons/feather.min.js')}}"></script>
+        <script src="{{asset('admin/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
+        <script src="{{asset('admin/js/plugins.js')}}"></script>
+
+        <!-- apexcharts -->
+        <script src="{{asset('admin/libs/apexcharts/apexcharts.min.js')}}"></script>
+
+        <!-- Vector map-->
+        <script src="{{asset('admin/libs/jsvectormap/js/jsvectormap.min.js')}}"></script>
+        <script src="{{asset('admin/libs/jsvectormap/maps/world-merc.js')}}"></script>
+
+        <!--Swiper slider js-->
+        <script src="{{asset('admin/libs/swiper/swiper-bundle.min.js')}}"></script>
+
+        <!-- Dashboard init -->
+        <script src="{{asset('admin/js/pages/dashboard-ecommerce.init.js')}}"></script>
+
+        <!-- App js -->
+        <script src="{{asset('admin/js/app.js')}}"></script>
+    </body>
+</html>

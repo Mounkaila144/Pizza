@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order index{% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title mb-0 text-center">Commande</h3>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="myTable" class="table nowrap align-middle table-datatable" style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Contenue</th>
+                <th>Client</th>
+                <th>Etat</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.date ? order.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>                    <a class="btn btn-sm btn-primary" href="{{ path('app_order_content', {'id': order.id}) }}">contenue</a>
+                </td>
+                <td>                    <a class="btn btn-sm btn-primary" href="{{ path('app_client_show', {'id': order.client.id}) }}">CLient</a>
+                </td>
+                <!-- ... autres colonnes ... -->
+                <td>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input change-state-switch" type="checkbox" data-order-id="{{ order.id }}" {% if order.state %}checked{% endif %}>
+                    </div>
+                </td>
+                <!-- ... autres colonnes ... -->
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% endblock %}
+    {% block javascripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        // Assurez-vous que vous avez inclus jQuery dans votre projet.
+
+        $(document).ready(function() {
+
+            // Écouteur d'événement change sur le bouton à bascule (switch)
+            $('.change-state-switch').change(function() {
+                var orderId = $(this).data('order-id');
+                var newState = $(this).prop('checked');
+
+                // Envoyer la requête AJAX
+                $.ajax({
+                    url: '/admin/order/change-order-state/' + orderId, // Remplacez '/change-order-state/' par le chemin de votre nouvelle action dans le contrôleur Symfony
+                    type: 'POST', // Vous pouvez également utiliser 'PUT' si vous préférez
+                    dataType: 'json',
+                    data: { state: newState },
+                    success: function(data) {
+                        if (data.success) {
+                            // Mettre à jour l'affichage pour refléter le nouvel état
+                            // Pour cet exemple, nous ne rechargerons pas la page car nous mettons déjà à jour le bouton à bascule (switch) en direct.
+                            // Vous pouvez également mettre à jour d'autres éléments de l'interface utilisateur en fonction du nouvel état.
+                            // Par exemple, vous pouvez changer le texte de la colonne "Etat" ou mettre à jour un indicateur visuel.
+                        } else {
+                            alert('Failed to change state. Please try again.');
+                        }
+                    },
+                    error: function() {
+                        alert('An error occurred. Please try again later.');
+                    }
+                });
+            });
+        });
+</script>
+{% endblock %}
