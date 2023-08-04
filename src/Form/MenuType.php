@@ -17,6 +17,7 @@ class MenuType extends AbstractType
             ->add('title')
             ->add('info')
             ->add('prix')
+            ->add('categorie')
             ->add('imageFile', VichFileType::class, [
                 'required' => false,
                 'allow_delete' => true,

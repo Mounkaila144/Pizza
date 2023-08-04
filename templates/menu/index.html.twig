@@ -9,15 +9,17 @@
     </div>
     <div class="card-body">
     <div class="table-responsive">
-        <table id="myTable" class="table nowrap align-middle table-datatable" style="width:100%">
+        <table class="table nowrap align-middle table-datatable" style="width:100%">
             <thead>
             <tr>
                 <th>Id</th>
                 <th>title</th>
                 <th>Info</th>
+                <th>Categorie</th>
                 <th>Prix</th>
                 <th>Image</th>
-                <th>actions</th>
+                <th>Modifier</th>
+                <th>Suprimer</th>
             </tr>
         </thead>
         <tbody>
@@ -26,14 +28,17 @@
                 <td>{{ menu.id }}</td>
                 <td>{{ menu.title }}</td>
                 <td>{{ menu.info }}</td>
+                <td>{{ menu.categorie.nom }}</td>
                 <td>{{ menu.prix }} €</td>
                 <td>
                         <img width="50" height="50" src="{{  vich_uploader_asset(menu, 'imageFile') }}" alt="{{ menu.title }}">
 
                 </td>
                 <td>
-                    <a href="{{ path('app_menu_show', {'id': menu.id}) }}">show</a>
-                    <a href="{{ path('app_menu_edit', {'id': menu.id}) }}">edit</a>
+                    <a class="btn btn-sm btn-primary" href="{{ path('app_menu_edit', {'id': menu.id}) }}">Modifier</a>
+                </td>
+                <td>
+                    {{ include('menu/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}

@@ -31,6 +31,10 @@ class Menu
     #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
 
+    #[ORM\ManyToOne(inversedBy: 'menus')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categorie $categorie = null;
+
 
     public function getId(): ?int
     {
@@ -100,6 +104,18 @@ class Menu
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
     }
 
 }

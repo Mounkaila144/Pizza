@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Menu;
 use App\Entity\Order;
 use App\Form\OrderType;
+use App\Repository\CategorieRepository;
 use App\Repository\ClientRepository;
 use App\Repository\MenuRepository;
 use App\Repository\OrderRepository;
@@ -55,13 +56,14 @@ class FrontController extends AbstractController
     }
 
     #[Route('/', name: 'app_front')]
-    public function index(MenuRepository $menuRepository, CartService $cartService): Response
+    public function index(MenuRepository $menuRepository, CartService $cartService,CategorieRepository $categorieRepository): Response
     {
         $cart = $cartService->getCart();
 
         return $this->render('menu/front.html.twig', [
             'menus' => $menuRepository->findAll(),
             'cart' => $cart,
+            'categories' => $categorieRepository->findAll(),
 
         ]);
     }

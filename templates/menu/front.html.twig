@@ -44,7 +44,15 @@
 
                         <!-- DROPDOWN MENU -->
                         <li><a href="#" class="menu">Nos Menu</a>
-
+                        <li><a href="#">Menu</a>
+                            <ul>
+                                {% for categorie in categories %}
+                                <li><a href="{{ path('app_categorie_show', {'id': categorie.id}) }}">{{ categorie.nom }}</a></li>
+                                {% else %}
+                                    <li><a href="#">Aucune Menu</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
                         </li>
 
                         <!-- MEGA MENU -->
@@ -179,7 +187,7 @@
                                         <!-- Image -->
                                         <img height="200" width="200" src="{{  vich_uploader_asset(menu, 'imageFile') }}" alt="{{ menu.title }}">
                                         <!-- Code de l'item -->
-                                        <span class="item-code bg-tra-dark">Code : {{ menu.id }}</span>
+                                        <span class="item-code bg-tra-dark">Category : {{ menu.categorie.nom }}</span>
                                         <!-- Icône de zoom -->
                                         <div class="menu-img-zoom ico-25">
                                             <a href="{{  vich_uploader_asset(menu, 'imageFile') }}" class="image-link">
